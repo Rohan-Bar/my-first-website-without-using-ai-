@@ -1,1 +1,0 @@
-alert("Dekhe rajo rege gele kede felbe ");

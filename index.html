@@ -1,14 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ron website</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VulnerabilityShield AI — Code Reviewer & Explainer</title>
   
+  <!-- Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Monaco Editor CDN -->
+  <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/editor/editor.main.min.css">
+  
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<h1>ok</h1>
+<body class="dark-theme">
 
+  <!-- Top Navigation -->
+  <header class="navbar">
+    <div class="nav-left">
+      <div class="logo">
+        <span class="logo-icon"><i data-lucide="shield-check"></i></span>
+        <span class="logo-text">Shield<strong>AI</strong></span>
+        <span class="badge-sub">AI-05</span>
+      </div>
+    </div>
+    
+    <nav class="nav-links">
+      <a href="#hero">Overview</a>
+      <a href="#studio">Audit Studio</a>
+      <a href="#diff-section">Side-by-Side Diff</a>
+      <a href="#docs">BBIT Handbook Spec</a>
+    </nav>
+
+    <div class="nav-right">
+      <button class="btn-ghost" id="webhookBtn"><i data-lucide="git-pull-request"></i> Webhook Config</button>
+      <a href="#studio" class="btn-primary-sm">Launch Reviewer</a>
+    </div>
+  </header>
+
+  <!-- Hero Section (ChatGPT / OpenAI Inspired) -->
+  <section id="hero" class="hero-section">
+    <div class="hero-glow"></div>
+    <div class="hero-container">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        <span>BBIT Hackathon 2026 • AI Automated Code Reviewer</span>
+      </div>
+
+      <h1 class="hero-title">
+        Audit code. Eliminate exploits.<br>
+        <span class="gradient-text">Understand the root cause.</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        Static linters output cryptic flags. ShieldAI scans OWASP Top 10 vulnerabilities, estimates Big-O bottlenecks, generates side-by-side git diff patches, and answers "Why is this vulnerable?" in plain English.
+      </p>
+
+      <!-- ChatGPT-style prompt bar for immediate input -->
+      <div class="hero-prompt-bar">
+        <div class="prompt-input-wrapper">
+          <i data-lucide="terminal" class="prompt-icon"></i>
+          <input type="text" id="gistInputHero" placeholder="Paste GitHub Raw URL, Gist link, or type a snippet to audit..." />
+          <div class="prompt-actions">
+            <select id="quickLangSelect">
+              <option value="python">Python</option>
+              <option value="javascript">JavaScript</option>
+              <option value="java">Java</option>
+              <option value="cpp">C++</option>
+            </select>
+            <button class="btn-prompt-send" id="heroAuditBtn">
+              <i data-lucide="arrow-up"></i>
+            </button>
+          </div>
+        </div>
+        <div class="prompt-suggestions">
+          <span class="suggestion-tag" data-sample="sqli"><i data-lucide="zap"></i> SQL Injection in Python</span>
+          <span class="suggestion-tag" data-sample="xss"><i data-lucide="shield-alert"></i> Stored XSS in Node.js</span>
+          <span class="suggestion-tag" data-sample="leak"><i data-lucide="key"></i> Leaked AWS Key</span>
+          <span class="suggestion-tag" data-sample="complexity"><i data-lucide="activity"></i> O(N²) Nested Loop</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Reviewer & Explainer Studio -->
+  <main id="studio" class="studio-container">
+    
+    <!-- Studio Toolbar -->
+    <div class="studio-header">
+      <div class="studio-toolbar-left">
+        <div class="select-group">
+          <label><i data-lucide="code-2"></i> Language</label>
+          <select id="editorLangSelect">
+            <option value="python">Python</option>
+            <option value="javascript">JavaScript</option>
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+          </select>
+        </div>
+
+        <div class="github-import">
+          <i data-lucide="github"></i>
+          <input type="url" id="githubUrlInput" placeholder="https://github.com/.../file.py or Gist URL">
+          <button id="fetchGithubBtn" class="btn-secondary-sm">Fetch File</button>
+        </div>
+      </div>
+
+      <div class="studio-toolbar-right">
+        <button id="runAuditBtn" class="btn-primary">
+          <i data-lucide="play"></i> Run Security & Big-O Audit
+        </button>
+      </div>
+    </div>
+
+    <!-- 3-Column Studio Workspace -->
+    <div class="studio-workspace">
+      
+      <!-- Panel 1: Monaco Code Editor (FR-1) -->
+      <section class="workspace-panel editor-panel">
+        <div class="panel-header">
+          <div class="panel-title"><i data-lucide="file-code"></i> Source Ingestion (Monaco)</div>
+          <span class="file-tag">snippet.py</span>
+        </div>
+        <div id="monaco-container"></div>
+      </section>
+
+      <!-- Panel 2: Security & Complexity Analysis (FR-2, FR-3) -->
+      <section class="workspace-panel analysis-panel">
+        <div class="panel-header">
+          <div class="panel-title"><i data-lucide="scan-eye"></i> Audit & Complexity Report</div>
+          <span class="status-pill status-ready" id="auditStatus">Ready to Scan</span>
+        </div>
+
+        <div class="panel-scroll-content">
+          <!-- Big-O Metrics (FR-3) -->
+          <div class="section-card">
+            <div class="card-header-sm">
+              <i data-lucide="gauge"></i> Big-O Complexity Estimator
+            </div>
+            <div class="metrics-grid">
+              <div class="metric-box">
+                <span class="metric-label">Time Complexity</span>
+                <span class="metric-val" id="timeComplexity">O(N²)</span>
+                <span class="metric-sub text-danger">Quadratic Bottleneck</span>
+              </div>
+              <div class="metric-box">
+                <span class="metric-label">Space Complexity</span>
+                <span class="metric-val" id="spaceComplexity">O(1)</span>
+                <span class="metric-sub text-success">Constant Aux Memory</span>
+              </div>
+            </div>
+            <div class="bottleneck-indicator" id="bottleneckNotice">
+              <i data-lucide="alert-triangle"></i> Bottleneck detected at <strong>Line 8</strong>: Nested iteration causes quadratic scaling.
+            </div>
+          </div>
+
+          <!-- OWASP Top 10 Vulnerabilities (FR-2) -->
+          <div class="section-card">
+            <div class="card-header-sm">
+              <i data-lucide="shield-alert"></i> OWASP Vulnerabilities Detected (<span id="vulnCount">2</span>)
+            </div>
+            
+            <div class="vuln-list" id="vulnList">
+              <!-- Cards injected by JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Panel 3: Interactive Explainer Chat (FR-5) -->
+      <section class="workspace-panel chat-panel">
+        <div class="panel-header">
+          <div class="panel-title"><i data-lucide="message-square-code"></i> Explainer AI Chat</div>
+          <span class="model-tag">Llama-3.3-70B</span>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-bubble ai">
+            <div class="bubble-header"><i data-lucide="bot"></i> ShieldAI Assistant</div>
+            <p>I’ve scanned your snippet. Ask me any question like <em>"Why is this SQL query vulnerable?"</em> or click a quick prompt below to see step-by-step exploit mechanics.</p>
+          </div>
+        </div>
+
+        <!-- Quick Explainer Prompts -->
+        <div class="quick-chat-prompts">
+          <button class="quick-chip" data-prompt="Why is this SQL query vulnerable?">Why is this SQL query vulnerable?</button>
+          <button class="quick-chip" data-prompt="Show step-by-step exploit demonstration">Show exploit payload simulation</button>
+          <button class="quick-chip" data-prompt="How does parameterized query solve this?">How does parameterization fix it?</button>
+        </div>
+
+        <!-- Chat Input -->
+        <div class="chat-input-area">
+          <input type="text" id="chatInput" placeholder="Ask about vulnerabilities or logic..." />
+          <button id="sendChatBtn"><i data-lucide="send"></i></button>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Side-by-Side Unified Git Diff (FR-4) -->
+    <section id="diff-section" class="diff-section">
+      <div class="diff-header">
+        <div class="diff-title-group">
+          <i data-lucide="git-commit"></i>
+          <h3>Interactive Side-by-Side Diff Fix (FR-4)</h3>
+          <span class="diff-tag">Unified Remediation Patch</span>
+        </div>
+        <button id="applyDiffBtn" class="btn-secondary-sm">
+          <i data-lucide="check"></i> Apply Patch to Editor
+        </button>
+      </div>
+
+      <div class="diff-viewer">
+        <div class="diff-column original-col">
+          <div class="diff-col-banner bg-deletion">
+            <span>Original (Insecure Code)</span>
+            <span class="badge-del">- Deletions</span>
+          </div>
+          <pre><code id="diffOriginal"></code></pre>
+        </div>
+
+        <div class="diff-column patched-col">
+          <div class="diff-col-banner bg-addition">
+            <span>Remediated Patch (Secure Implementation)</span>
+            <span class="badge-add">+ Additions</span>
+          </div>
+          <pre><code id="diffPatched"></code></pre>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- GitHub Webhook Integration Modal (FR-6) -->
+  <div class="modal-backdrop" id="webhookModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title"><i data-lucide="webhook"></i> GitHub Webhook & PR Ingestion (FR-6)</div>
+        <button class="btn-close" id="closeModalBtn"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body">
+        <p class="text-secondary">Connect a GitHub repository webhook to automate PR audits and inline review comments on every pull request.</p>
+        
+        <div class="form-group">
+          <label>Payload URL</label>
+          <input type="text" readonly value="https://api.shieldai.dev/v1/github/webhook/bbit-hackathon" />
+        </div>
+
+        <div class="form-group">
+          <label>Secret Token</label>
+          <input type="password" value="sh_live_8943f9a941e74fbbit" readonly />
+        </div>
+
+        <div class="form-group">
+          <label>Trigger Events</label>
+          <div class="checkbox-row">
+            <label><input type="checkbox" checked disabled> Pull requests</label>
+            <label><input type="checkbox" checked disabled> Pushes to main</label>
+            <label><input type="checkbox" checked disabled> Issue comments</label>
+          </div>
+        </div>
+
+        <div class="webhook-status-box">
+          <div class="status-indicator-ping"></div>
+          <div>
+            <strong>Webhook Status: Listening</strong>
+            <p>Simulating PR #14 on <code>bbit-coders/insecure-demo</code>: All AST checks active.</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary-sm" id="testPingBtn">Send Test Ping</button>
+        <button class="btn-primary-sm" id="saveWebhookBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Monaco loader -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>

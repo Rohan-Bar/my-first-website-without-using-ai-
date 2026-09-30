@@ -3,286 +3,613 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VulnerabilityShield AI — Code Reviewer & Explainer</title>
-  
-  <!-- Fonts: Inter & JetBrains Mono -->
+  <title>ShieldAI — Simple Code Reviewer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  
-  <!-- Monaco Editor CDN -->
-  <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/editor/editor.main.min.css">
-  
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- CSS Variables & Theme (ChatGPT Dark Aesthetic) --- */
+    :root {
+      --bg: #18181b;
+      --card-bg: #27272a;
+      --card-inner: #202023;
+      --border: #3f3f46;
+      --text: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --accent: #10a37f;
+      --accent-hover: #0e8a6b;
+      --danger: #ef4444;
+      --danger-bg: rgba(239, 68, 68, 0.15);
+      --success: #22c55e;
+      --success-bg: rgba(34, 197, 94, 0.15);
+      --font: 'Inter', system-ui, sans-serif;
+      --font-code: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      line-height: 1.6;
+      padding: 0 16px 60px;
+    }
+
+    /* --- Navigation --- */
+    nav {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo-badge {
+      background: var(--card-bg);
+      color: var(--accent);
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+    }
+
+    /* --- Hero Section --- */
+    .hero {
+      text-align: center;
+      max-width: 650px;
+      margin: 48px auto 32px;
+    }
+    .hero h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* --- Preset Sample Buttons --- */
+    .samples {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .sample-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sample-btn:hover {
+      background: #323236;
+      color: var(--text);
+      border-color: var(--accent);
+    }
+
+    /* --- Main App Container --- */
+    .app-box {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    /* Code Input Box */
+    .editor-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: #202023;
+      border-bottom: 1px solid var(--border);
+    }
+    .editor-topbar select {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      outline: none;
+    }
+    .editor-textarea {
+      width: 100%;
+      height: 200px;
+      background: var(--card-inner);
+      border: none;
+      color: var(--text);
+      font-family: var(--font-code);
+      font-size: 0.9rem;
+      padding: 16px;
+      resize: vertical;
+      outline: none;
+      line-height: 1.5;
+    }
+
+    /* Main Action Button */
+    .action-bar {
+      padding: 12px 16px;
+      display: flex;
+      justify-content: flex-end;
+      background: #202023;
+      border-top: 1px solid var(--border);
+    }
+    .btn-audit {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .btn-audit:hover { background: var(--accent-hover); }
+
+    /* --- Output Tabs --- */
+    .results-container {
+      border-top: 1px solid var(--border);
+      display: none; /* Shown after clicking Review */
+    }
+    .tabs-header {
+      display: flex;
+      background: #202023;
+      border-bottom: 1px solid var(--border);
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 12px;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+      background: var(--card-bg);
+    }
+
+    .tab-body {
+      padding: 20px;
+    }
+    .tab-pane {
+      display: none;
+    }
+    .tab-pane.active {
+      display: block;
+    }
+
+    /* --- Tab 1: Vulnerabilities Cards --- */
+    .vuln-card {
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--danger);
+      padding: 14px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+    .vuln-title {
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .badge-critical {
+      background: var(--danger-bg);
+      color: var(--danger);
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+    .vuln-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* --- Tab 2: Complexity Cards --- */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .metric-card {
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      padding: 14px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .metric-val {
+      font-family: var(--font-code);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-top: 4px;
+    }
+    .notice-box {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid #f59e0b;
+      color: #fbbf24;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+    }
+
+    /* --- Tab 3: Simple Diff View --- */
+    .diff-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .diff-box {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .diff-header {
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    .diff-header.insecure { background: var(--danger-bg); color: var(--danger); }
+    .diff-header.secure { background: var(--success-bg); color: var(--success); }
+    .diff-code {
+      background: var(--card-inner);
+      padding: 12px;
+      font-family: var(--font-code);
+      font-size: 0.85rem;
+      white-space: pre-wrap;
+      color: var(--text);
+    }
+
+    /* --- Tab 4: Explainer Chat --- */
+    .chat-box {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 250px;
+      overflow-y: auto;
+      margin-bottom: 12px;
+    }
+    .msg {
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      max-width: 85%;
+    }
+    .msg.bot {
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      align-self: flex-start;
+    }
+    .msg.user {
+      background: var(--accent);
+      color: #fff;
+      align-self: flex-end;
+    }
+    .chat-input-row {
+      display: flex;
+      gap: 8px;
+    }
+    .chat-input-row input {
+      flex: 1;
+      background: var(--card-inner);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 8px;
+      outline: none;
+    }
+    .chat-input-row button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    /* Responsive */
+    @media (max-width: 650px) {
+      .grid-2, .diff-container { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
-<body class="dark-theme">
+<body>
 
-  <!-- Top Navigation -->
-  <header class="navbar">
-    <div class="nav-left">
-      <div class="logo">
-        <span class="logo-icon"><i data-lucide="shield-check"></i></span>
-        <span class="logo-text">Shield<strong>AI</strong></span>
-        <span class="badge-sub">AI-05</span>
-      </div>
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">
+      🛡️ ShieldAI
+      <span class="logo-badge">BBIT 2026</span>
     </div>
-    
-    <nav class="nav-links">
-      <a href="#hero">Overview</a>
-      <a href="#studio">Audit Studio</a>
-      <a href="#diff-section">Side-by-Side Diff</a>
-      <a href="#docs">BBIT Handbook Spec</a>
-    </nav>
-
-    <div class="nav-right">
-      <button class="btn-ghost" id="webhookBtn"><i data-lucide="git-pull-request"></i> Webhook Config</button>
-      <a href="#studio" class="btn-primary-sm">Launch Reviewer</a>
+    <div style="font-size: 0.85rem; color: var(--text-muted);">
+      Automated Code Reviewer
     </div>
-  </header>
+  </nav>
 
-  <!-- Hero Section (ChatGPT / OpenAI Inspired) -->
-  <section id="hero" class="hero-section">
-    <div class="hero-glow"></div>
-    <div class="hero-container">
-      <div class="hero-badge">
-        <span class="pulse-dot"></span>
-        <span>BBIT Hackathon 2026 • AI Automated Code Reviewer</span>
-      </div>
-
-      <h1 class="hero-title">
-        Audit code. Eliminate exploits.<br>
-        <span class="gradient-text">Understand the root cause.</span>
-      </h1>
-
-      <p class="hero-subtitle">
-        Static linters output cryptic flags. ShieldAI scans OWASP Top 10 vulnerabilities, estimates Big-O bottlenecks, generates side-by-side git diff patches, and answers "Why is this vulnerable?" in plain English.
-      </p>
-
-      <!-- ChatGPT-style prompt bar for immediate input -->
-      <div class="hero-prompt-bar">
-        <div class="prompt-input-wrapper">
-          <i data-lucide="terminal" class="prompt-icon"></i>
-          <input type="text" id="gistInputHero" placeholder="Paste GitHub Raw URL, Gist link, or type a snippet to audit..." />
-          <div class="prompt-actions">
-            <select id="quickLangSelect">
-              <option value="python">Python</option>
-              <option value="javascript">JavaScript</option>
-              <option value="java">Java</option>
-              <option value="cpp">C++</option>
-            </select>
-            <button class="btn-prompt-send" id="heroAuditBtn">
-              <i data-lucide="arrow-up"></i>
-            </button>
-          </div>
-        </div>
-        <div class="prompt-suggestions">
-          <span class="suggestion-tag" data-sample="sqli"><i data-lucide="zap"></i> SQL Injection in Python</span>
-          <span class="suggestion-tag" data-sample="xss"><i data-lucide="shield-alert"></i> Stored XSS in Node.js</span>
-          <span class="suggestion-tag" data-sample="leak"><i data-lucide="key"></i> Leaked AWS Key</span>
-          <span class="suggestion-tag" data-sample="complexity"><i data-lucide="activity"></i> O(N²) Nested Loop</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Main Reviewer & Explainer Studio -->
-  <main id="studio" class="studio-container">
-    
-    <!-- Studio Toolbar -->
-    <div class="studio-header">
-      <div class="studio-toolbar-left">
-        <div class="select-group">
-          <label><i data-lucide="code-2"></i> Language</label>
-          <select id="editorLangSelect">
-            <option value="python">Python</option>
-            <option value="javascript">JavaScript</option>
-            <option value="java">Java</option>
-            <option value="cpp">C++</option>
-          </select>
-        </div>
-
-        <div class="github-import">
-          <i data-lucide="github"></i>
-          <input type="url" id="githubUrlInput" placeholder="https://github.com/.../file.py or Gist URL">
-          <button id="fetchGithubBtn" class="btn-secondary-sm">Fetch File</button>
-        </div>
-      </div>
-
-      <div class="studio-toolbar-right">
-        <button id="runAuditBtn" class="btn-primary">
-          <i data-lucide="play"></i> Run Security & Big-O Audit
-        </button>
-      </div>
-    </div>
-
-    <!-- 3-Column Studio Workspace -->
-    <div class="studio-workspace">
-      
-      <!-- Panel 1: Monaco Code Editor (FR-1) -->
-      <section class="workspace-panel editor-panel">
-        <div class="panel-header">
-          <div class="panel-title"><i data-lucide="file-code"></i> Source Ingestion (Monaco)</div>
-          <span class="file-tag">snippet.py</span>
-        </div>
-        <div id="monaco-container"></div>
-      </section>
-
-      <!-- Panel 2: Security & Complexity Analysis (FR-2, FR-3) -->
-      <section class="workspace-panel analysis-panel">
-        <div class="panel-header">
-          <div class="panel-title"><i data-lucide="scan-eye"></i> Audit & Complexity Report</div>
-          <span class="status-pill status-ready" id="auditStatus">Ready to Scan</span>
-        </div>
-
-        <div class="panel-scroll-content">
-          <!-- Big-O Metrics (FR-3) -->
-          <div class="section-card">
-            <div class="card-header-sm">
-              <i data-lucide="gauge"></i> Big-O Complexity Estimator
-            </div>
-            <div class="metrics-grid">
-              <div class="metric-box">
-                <span class="metric-label">Time Complexity</span>
-                <span class="metric-val" id="timeComplexity">O(N²)</span>
-                <span class="metric-sub text-danger">Quadratic Bottleneck</span>
-              </div>
-              <div class="metric-box">
-                <span class="metric-label">Space Complexity</span>
-                <span class="metric-val" id="spaceComplexity">O(1)</span>
-                <span class="metric-sub text-success">Constant Aux Memory</span>
-              </div>
-            </div>
-            <div class="bottleneck-indicator" id="bottleneckNotice">
-              <i data-lucide="alert-triangle"></i> Bottleneck detected at <strong>Line 8</strong>: Nested iteration causes quadratic scaling.
-            </div>
-          </div>
-
-          <!-- OWASP Top 10 Vulnerabilities (FR-2) -->
-          <div class="section-card">
-            <div class="card-header-sm">
-              <i data-lucide="shield-alert"></i> OWASP Vulnerabilities Detected (<span id="vulnCount">2</span>)
-            </div>
-            
-            <div class="vuln-list" id="vulnList">
-              <!-- Cards injected by JS -->
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Panel 3: Interactive Explainer Chat (FR-5) -->
-      <section class="workspace-panel chat-panel">
-        <div class="panel-header">
-          <div class="panel-title"><i data-lucide="message-square-code"></i> Explainer AI Chat</div>
-          <span class="model-tag">Llama-3.3-70B</span>
-        </div>
-
-        <div class="chat-messages" id="chatMessages">
-          <div class="chat-bubble ai">
-            <div class="bubble-header"><i data-lucide="bot"></i> ShieldAI Assistant</div>
-            <p>I’ve scanned your snippet. Ask me any question like <em>"Why is this SQL query vulnerable?"</em> or click a quick prompt below to see step-by-step exploit mechanics.</p>
-          </div>
-        </div>
-
-        <!-- Quick Explainer Prompts -->
-        <div class="quick-chat-prompts">
-          <button class="quick-chip" data-prompt="Why is this SQL query vulnerable?">Why is this SQL query vulnerable?</button>
-          <button class="quick-chip" data-prompt="Show step-by-step exploit demonstration">Show exploit payload simulation</button>
-          <button class="quick-chip" data-prompt="How does parameterized query solve this?">How does parameterization fix it?</button>
-        </div>
-
-        <!-- Chat Input -->
-        <div class="chat-input-area">
-          <input type="text" id="chatInput" placeholder="Ask about vulnerabilities or logic..." />
-          <button id="sendChatBtn"><i data-lucide="send"></i></button>
-        </div>
-      </section>
-
-    </div>
-
-    <!-- Side-by-Side Unified Git Diff (FR-4) -->
-    <section id="diff-section" class="diff-section">
-      <div class="diff-header">
-        <div class="diff-title-group">
-          <i data-lucide="git-commit"></i>
-          <h3>Interactive Side-by-Side Diff Fix (FR-4)</h3>
-          <span class="diff-tag">Unified Remediation Patch</span>
-        </div>
-        <button id="applyDiffBtn" class="btn-secondary-sm">
-          <i data-lucide="check"></i> Apply Patch to Editor
-        </button>
-      </div>
-
-      <div class="diff-viewer">
-        <div class="diff-column original-col">
-          <div class="diff-col-banner bg-deletion">
-            <span>Original (Insecure Code)</span>
-            <span class="badge-del">- Deletions</span>
-          </div>
-          <pre><code id="diffOriginal"></code></pre>
-        </div>
-
-        <div class="diff-column patched-col">
-          <div class="diff-col-banner bg-addition">
-            <span>Remediated Patch (Secure Implementation)</span>
-            <span class="badge-add">+ Additions</span>
-          </div>
-          <pre><code id="diffPatched"></code></pre>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- GitHub Webhook Integration Modal (FR-6) -->
-  <div class="modal-backdrop" id="webhookModal">
-    <div class="modal-box">
-      <div class="modal-header">
-        <div class="modal-title"><i data-lucide="webhook"></i> GitHub Webhook & PR Ingestion (FR-6)</div>
-        <button class="btn-close" id="closeModalBtn"><i data-lucide="x"></i></button>
-      </div>
-      <div class="modal-body">
-        <p class="text-secondary">Connect a GitHub repository webhook to automate PR audits and inline review comments on every pull request.</p>
-        
-        <div class="form-group">
-          <label>Payload URL</label>
-          <input type="text" readonly value="https://api.shieldai.dev/v1/github/webhook/bbit-hackathon" />
-        </div>
-
-        <div class="form-group">
-          <label>Secret Token</label>
-          <input type="password" value="sh_live_8943f9a941e74fbbit" readonly />
-        </div>
-
-        <div class="form-group">
-          <label>Trigger Events</label>
-          <div class="checkbox-row">
-            <label><input type="checkbox" checked disabled> Pull requests</label>
-            <label><input type="checkbox" checked disabled> Pushes to main</label>
-            <label><input type="checkbox" checked disabled> Issue comments</label>
-          </div>
-        </div>
-
-        <div class="webhook-status-box">
-          <div class="status-indicator-ping"></div>
-          <div>
-            <strong>Webhook Status: Listening</strong>
-            <p>Simulating PR #14 on <code>bbit-coders/insecure-demo</code>: All AST checks active.</p>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn-secondary-sm" id="testPingBtn">Send Test Ping</button>
-        <button class="btn-primary-sm" id="saveWebhookBtn">Close</button>
-      </div>
-    </div>
+  <!-- Hero Header -->
+  <div class="hero">
+    <h1>Audit code. Fix flaws. <br><span>Explain why.</span></h1>
+    <p>Paste a snippet or select an example below to find OWASP security bugs, check Big-O speed, and get clean fixes.</p>
   </div>
 
-  <!-- Monaco loader -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
-  <script src="app.js"></script>
+  <!-- Quick Example Buttons -->
+  <div class="samples">
+    <button class="sample-btn" onclick="loadExample('sqli')">⚡ SQL Injection (Python)</button>
+    <button class="sample-btn" onclick="loadExample('xss')">🛡️ Reflected XSS (Node.js)</button>
+    <button class="sample-btn" onclick="loadExample('secret')">🔑 Leaked API Key (Python)</button>
+  </div>
+
+  <!-- Main Card -->
+  <div class="app-box">
+    
+    <!-- Code Input Section -->
+    <div class="editor-topbar">
+      <span style="font-size: 0.85rem; color: var(--text-muted);">Source Code</span>
+      <select id="langSelect">
+        <option value="python">Python</option>
+        <option value="javascript">JavaScript</option>
+        <option value="java">Java</option>
+        <option value="cpp">C++</option>
+      </select>
+    </div>
+
+    <textarea id="codeEditor" class="editor-textarea" spellcheck="false"></textarea>
+
+    <div class="action-bar">
+      <button class="btn-audit" onclick="runAnalysis()">
+        Review &amp; Explain Code →
+      </button>
+    </div>
+
+    <!-- Output Section with 4 Simple Tabs -->
+    <div id="results" class="results-container">
+      <div class="tabs-header">
+        <button class="tab-btn active" onclick="switchTab(0)">🛡️ 1. Security Issues</button>
+        <button class="tab-btn" onclick="switchTab(1)">⚡ 2. Complexity</button>
+        <button class="tab-btn" onclick="switchTab(2)">🔄 3. Safe Fix</button>
+        <button class="tab-btn" onclick="switchTab(3)">💬 4. Ask Explainer</button>
+      </div>
+
+      <div class="tab-body">
+        
+        <!-- Tab 1: Security -->
+        <div id="tab-0" class="tab-pane active">
+          <div id="vulnArea"></div>
+        </div>
+
+        <!-- Tab 2: Complexity -->
+        <div id="tab-1" class="tab-pane">
+          <div class="grid-2">
+            <div class="metric-card">
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Estimated Time Complexity</span>
+              <div class="metric-val" id="timeVal">O(N²)</div>
+            </div>
+            <div class="metric-card">
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Estimated Space Complexity</span>
+              <div class="metric-val" id="spaceVal">O(1)</div>
+            </div>
+          </div>
+          <div class="notice-box" id="bottleneckVal">
+            ⚠️ Bottleneck detected on lines 11–13: Nested loops scale quadratically.
+          </div>
+        </div>
+
+        <!-- Tab 3: Diff -->
+        <div id="tab-2" class="tab-pane">
+          <div class="diff-container">
+            <div class="diff-box">
+              <div class="diff-header insecure">❌ Insecure Original</div>
+              <div class="diff-code" id="diffBefore"></div>
+            </div>
+            <div class="diff-box">
+              <div class="diff-header secure">✅ Remediated Fix</div>
+              <div class="diff-code" id="diffAfter"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Explainer Chat -->
+        <div id="tab-3" class="tab-pane">
+          <div class="chat-box" id="chatBox">
+            <div class="msg bot" id="botIntro">
+              Ask me anything about why this vulnerability happens and how to prevent it.
+            </div>
+          </div>
+          <div class="chat-input-row">
+            <input type="text" id="userQuery" placeholder="Ask: 'Why is this query vulnerable?' or 'Show exploit'">
+            <button onclick="handleChat()">Send</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Logic -->
+  <script>
+    // Pre-loaded easy examples matching the problem statement
+    const DATA = {
+      sqli: {
+        lang: 'python',
+        code: `def get_user_data(user_id):\n    # INSECURE: user_id is concatenated directly into SQL\n    query = "SELECT * FROM users WHERE id = '" + user_id + "'"\n    cursor.execute(query)\n    \n    # Inefficient loop lookup\n    results = cursor.fetchall()\n    for a in results:\n        for b in results:\n            pass\n    return results`,
+        time: 'O(N²)',
+        space: 'O(1)',
+        bottleneck: '⚠️ Line 8-10: Nested for-loop creates an O(N²) time bottleneck.',
+        vulns: [
+          {
+            title: 'SQL Injection (OWASP A03:2021)',
+            badge: 'Critical',
+            desc: "Direct string concatenation allows an attacker to enter input like ' OR '1'='1 to access all database records."
+          }
+        ],
+        before: `query = "SELECT * FROM users WHERE id = '" + user_id + "'"\ncursor.execute(query)`,
+        after: `query = "SELECT * FROM users WHERE id = %s"\ncursor.execute(query, (user_id,))`,
+        explanation: 'String concatenation lets attacker-supplied text change the SQL structure. Parameterized queries tell the database driver to treat input strictly as raw data, not executable commands.'
+      },
+      xss: {
+        lang: 'javascript',
+        code: `app.get('/search', (req, res) => {\n    // INSECURE: query parameter directly rendered into HTML\n    const q = req.query.keyword;\n    res.send("<h1>Search results for: " + q + "</h1>");\n});`,
+        time: 'O(1)',
+        space: 'O(1)',
+        bottleneck: '✅ No complexity bottleneck found. Linear constant execution.',
+        vulns: [
+          {
+            title: 'Reflected Cross-Site Scripting (OWASP A03:2021)',
+            badge: 'Critical',
+            desc: 'User input rendered directly into the HTML DOM without escaping, enabling malicious JavaScript execution.'
+          }
+        ],
+        before: `res.send("<h1>Search results for: " + q + "</h1>");`,
+        after: `const safeTerm = escapeHtml(q);\nres.send(\`<h1>Search results for: \${safeTerm}</h1>\`);`,
+        explanation: 'Without HTML entity encoding, browsers will parse tags like <script> or <img onerror=...> submitted in query parameters, allowing attackers to steal session tokens.'
+      },
+      secret: {
+        lang: 'python',
+        code: `# INSECURE: Leaked secret key in source code\nAWS_SECRET = "AKIAIOSFODNN7EXAMPLE"\n\ndef connect():\n    return auth(AWS_SECRET)`,
+        time: 'O(1)',
+        space: 'O(1)',
+        bottleneck: '✅ Constant runtime.',
+        vulns: [
+          {
+            title: 'Hardcoded Secret Token (OWASP A07:2021)',
+            badge: 'Critical',
+            desc: 'Sensitive cloud credential checked into version control; risks automated scanning and immediate cloud takeover.'
+          }
+        ],
+        before: `AWS_SECRET = "AKIAIOSFODNN7EXAMPLE"`,
+        after: `import os\nAWS_SECRET = os.environ.get("AWS_SECRET_KEY")`,
+        explanation: 'Hardcoded keys pushed to Git can be extracted by threat actors in seconds. Secrets should always be loaded from environment variables or a vault.'
+      }
+    };
+
+    let currentItem = DATA.sqli;
+
+    // Load example snippet
+    function loadExample(key) {
+      currentItem = DATA[key];
+      document.getElementById('codeEditor').value = currentItem.code;
+      document.getElementById('langSelect').value = currentItem.lang;
+      runAnalysis();
+    }
+
+    // Trigger analysis and display results
+    function runAnalysis() {
+      const results = document.getElementById('results');
+      results.style.display = 'block';
+
+      // 1. Fill Vulnerabilities
+      const vulnArea = document.getElementById('vulnArea');
+      vulnArea.innerHTML = '';
+      currentItem.vulns.forEach(v => {
+        vulnArea.innerHTML += `
+          <div class="vuln-card">
+            <div class="vuln-title">
+              <span>${v.title}</span>
+              <span class="badge-critical">${v.badge}</span>
+            </div>
+            <p class="vuln-desc">${v.desc}</p>
+          </div>
+        `;
+      });
+
+      // 2. Fill Complexity
+      document.getElementById('timeVal').textContent = currentItem.time;
+      document.getElementById('spaceVal').textContent = currentItem.space;
+      document.getElementById('bottleneckVal').textContent = currentItem.bottleneck;
+
+      // 3. Fill Diff
+      document.getElementById('diffBefore').textContent = currentItem.before;
+      document.getElementById('diffAfter').textContent = currentItem.after;
+
+      // 4. Reset Chat
+      document.getElementById('chatBox').innerHTML = `
+        <div class="msg bot">I analyzed this snippet. ${currentItem.explanation}</div>
+      `;
+
+      // Smooth scroll down to results
+      results.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Tab switching
+    function switchTab(index) {
+      document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+        btn.classList.toggle('active', i === index);
+      });
+      document.querySelectorAll('.tab-pane').forEach((pane, i) => {
+        pane.classList.toggle('active', i === index);
+      });
+    }
+
+    // Interactive Explainer Chat
+    function handleChat() {
+      const input = document.getElementById('userQuery');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const chatBox = document.getElementById('chatBox');
+      
+      // User message
+      chatBox.innerHTML += `<div class="msg user">${text}</div>`;
+      input.value = '';
+
+      // Simple, responsive explanations
+      setTimeout(() => {
+        let reply = "";
+        const q = text.toLowerCase();
+        if (q.includes('why') || q.includes('vulnerable')) {
+          reply = `<strong>Root Cause:</strong> ${currentItem.explanation}`;
+        } else if (q.includes('exploit') || q.includes('payload')) {
+          reply = `<strong>Exploit Demonstration:</strong> An attacker submits <code>' OR 1=1 --</code>. This bypasses authentication because the condition evaluates to true for every single row.`;
+        } else if (q.includes('fix') || q.includes('how')) {
+          reply = `<strong>How to fix:</strong> Switch to the <strong>🔄 3. Safe Fix</strong> tab to copy the parameterized replacement code.`;
+        } else {
+          reply = `Great question! The core issue here is improper separation of untrusted user input and execution commands. Always sanitize input or use parameterized queries.`;
+        }
+
+        chatBox.innerHTML += `<div class="msg bot">${reply}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }, 400);
+    }
+
+    // Load initial SQLi example on page load
+    window.onload = () => {
+      loadExample('sqli');
+    };
+  </script>
 </body>
 </html>

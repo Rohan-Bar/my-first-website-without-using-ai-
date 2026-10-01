@@ -1,0 +1,740 @@
+
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    position: relative;
+    padding: 115px 0 100px;
+    background: linear-gradient(180deg, #eaf2ff 0%, #cfe0fb 100%);
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.hero-container {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+
+.hero-content {
+    width: 100%;
+    max-width: 820px;
+}
+
+
+/* =========================================================
+   HERO BADGE
+========================================================= */
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 6px 11px;
+
+    background: #ffffff;
+
+    border: 1px solid #d9dcd8;
+    border-radius: 5px;
+
+    color: #4b5563;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+
+    margin-bottom: 25px;
+}
+
+
+.badge-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #15803d;
+}
+
+
+/* =========================================================
+   HERO HEADING
+========================================================= */
+
+.hero h1 {
+    margin: 0 0 25px;
+
+    color: #111827;
+
+    font-size: clamp(48px, 7vw, 76px);
+
+    line-height: 1.02;
+
+    letter-spacing: -3.5px;
+
+    font-weight: 700;
+}
+
+
+.gradient-text {
+    color: #1e3a5f;
+}
+
+
+/* =========================================================
+   HERO DESCRIPTION
+========================================================= */
+
+.hero-description {
+    max-width: 650px;
+
+    margin: 0 auto 32px;
+
+    color: #626975;
+
+    font-size: 16px;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   HERO BUTTON
+========================================================= */
+
+.hero-buttons {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    gap: 10px;
+
+    flex-wrap: wrap;
+    
+}
+
+
+/* =========================================================
+   HERO TRUST / PRODUCT CAPABILITIES
+========================================================= */
+
+.hero-trust {
+    display: flex;
+
+    justify-content: center;
+    align-items: stretch;
+
+    gap: 0;
+
+    max-width: 650px;
+
+    margin: 50px auto 0;
+
+    border-top: 1px solid #dedfd9;
+    border-bottom: 1px solid #dedfd9;
+}
+
+
+.trust-item {
+    flex: 1;
+
+    padding: 18px 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    text-align: center;
+}
+
+
+.trust-item + .trust-item {
+    border-left: 1px solid #dedfd9;
+}
+
+
+.trust-item strong {
+    color: #1e3a5f;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.trust-item span {
+    color: #737983;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   FEATURES SECTION
+========================================================= */
+
+.features-section {
+    padding: 105px 0;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+/* =========================================================
+   SECTION HEADING
+========================================================= */
+
+.section-heading {
+    width: 100%;
+    max-width: 760px;
+
+    margin: 0 auto 48px;
+
+    text-align: center;
+}
+
+
+.section-label {
+    display: inline-block;
+
+    color: #1e3a5f;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.2px;
+}
+
+
+.section-heading h2 {
+    margin: 11px 0 0;
+
+    color: #111827;
+
+    font-size: clamp(32px, 4.5vw, 48px);
+
+    line-height: 1.12;
+
+    letter-spacing: -1.8px;
+}
+
+
+.section-heading h2 span {
+    color: #1e3a5f;
+}
+
+
+.section-heading p {
+    max-width: 600px;
+
+    margin: 17px auto 0;
+
+    color: #69707a;
+
+    font-size: 14px;
+
+    line-height: 1.75;
+}
+
+
+/* =========================================================
+   FEATURES GRID
+========================================================= */
+
+.features-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 0;
+
+    border-top: 1px solid #dedfd9;
+    border-left: 1px solid #dedfd9;
+}
+
+
+/* =========================================================
+   FEATURE CARD
+========================================================= */
+
+.feature-card {
+    position: relative;
+
+    min-height: 270px;
+
+    padding: 30px;
+
+    background: #ffffff;
+
+    border-right: 1px solid #dedfd9;
+    border-bottom: 1px solid #dedfd9;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.feature-card:hover {
+    background: #fafaf8;
+}
+
+
+/* =========================================================
+   FEATURE NUMBER
+========================================================= */
+
+.feature-number {
+    margin-bottom: 28px;
+
+    color: #9ca3af;
+
+    font-family:
+        "Cascadia Code",
+        "Fira Code",
+        Consolas,
+        monospace;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   FEATURE ICON
+========================================================= */
+
+.feature-icon {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 22px;
+
+    border-radius: 5px;
+
+    font-family:
+        "Cascadia Code",
+        "Fira Code",
+        Consolas,
+        monospace;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+/* Security */
+
+.security-icon {
+    background: #fef2f2;
+
+    color: #b91c1c;
+}
+
+
+/* Complexity */
+
+.complexity-icon {
+    background: #f1f5f9;
+
+    color: #334155;
+}
+
+
+/* AI */
+
+.ai-icon {
+    background: #eef2f5;
+
+    color: #475569;
+}
+
+
+/* Secure Fix */
+
+.fix-icon {
+    background: #f0fdf4;
+
+    color: #15803d;
+}
+
+
+/* =========================================================
+   FEATURE CONTENT
+========================================================= */
+
+.feature-card h3 {
+    margin: 0 0 10px;
+
+    color: #1f2937;
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+
+.feature-card p {
+    max-width: 250px;
+
+    margin: 0;
+
+    color: #69707a;
+
+    font-size: 12px;
+
+    line-height: 1.75;
+}
+
+
+/* =========================================================
+   HOW IT WORKS
+========================================================= */
+
+.how-section {
+    padding: 105px 0;
+
+    background: #f7f7f5;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+/* =========================================================
+   STEPS
+========================================================= */
+
+.steps {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 0;
+
+    border-top: 1px solid #dedfd9;
+    border-left: 1px solid #dedfd9;
+}
+
+
+/* =========================================================
+   STEP
+========================================================= */
+
+.step {
+    min-height: 235px;
+
+    padding: 30px;
+
+    background: #ffffff;
+
+    border-right: 1px solid #dedfd9;
+    border-bottom: 1px solid #dedfd9;
+}
+
+
+.step-number {
+    margin-bottom: 50px;
+
+    color: #1e3a5f;
+
+    font-family:
+        "Cascadia Code",
+        "Fira Code",
+        Consolas,
+        monospace;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.step-content h3 {
+    margin: 0 0 10px;
+
+    color: #1f2937;
+
+    font-size: 15px;
+}
+
+
+.step-content p {
+    max-width: 250px;
+
+    margin: 0;
+
+    color: #69707a;
+
+    font-size: 12px;
+
+    line-height: 1.75;
+}
+
+
+/* =========================================================
+   FINAL CTA
+========================================================= */
+
+.cta-section {
+    padding: 95px 0;
+
+    background: #1e3a5f;
+
+    text-align: center;
+}
+
+
+.cta-container {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+
+.cta-section .section-label {
+    color: #c7d5e3;
+}
+
+
+.cta-section h2 {
+    margin: 13px 0 0;
+
+    color: #ffffff;
+
+    font-size: clamp(36px, 5vw, 56px);
+
+    line-height: 1.1;
+
+    letter-spacing: -2px;
+}
+
+
+.cta-section p {
+    max-width: 500px;
+
+    margin: 18px auto 30px;
+
+    color: #d2dce6;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+
+.cta-section .primary-button {
+    background: #ffffff;
+
+    color: #1e3a5f;
+
+    border-color: #ffffff;
+}
+
+
+.cta-section .primary-button:hover {
+    background: #f1f4f7;
+
+    border-color: #f1f4f7;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .hero {
+        padding: 95px 0 85px;
+    }
+
+
+    .features-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    .steps {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .hero {
+        padding: 75px 0 70px;
+    }
+
+
+    .hero h1 {
+        font-size: clamp(42px, 12vw, 58px);
+
+        letter-spacing: -2px;
+    }
+
+
+    .hero-description {
+        padding: 0 10px;
+
+        font-size: 14px;
+    }
+
+
+    .hero-trust {
+        width: 100%;
+
+        flex-direction: column;
+
+        border-bottom: 1px solid #dedfd9;
+    }
+
+
+    .trust-item {
+        padding: 15px;
+    }
+
+
+    .trust-item + .trust-item {
+        border-left: none;
+
+        border-top: 1px solid #dedfd9;
+    }
+
+
+    .features-section,
+    .how-section {
+        padding: 75px 0;
+    }
+
+
+    .section-heading {
+        margin-bottom: 35px;
+    }
+
+
+    .section-heading h2 {
+        font-size: 34px;
+
+        letter-spacing: -1.2px;
+    }
+
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .feature-card {
+        min-height: auto;
+
+        padding: 25px;
+    }
+
+
+    .feature-card p {
+        max-width: 100%;
+    }
+
+
+    .steps {
+        grid-template-columns: 1fr;
+    }
+
+
+    .step {
+        min-height: auto;
+
+        padding: 25px;
+    }
+
+
+    .step-number {
+        margin-bottom: 35px;
+    }
+
+
+    .step-content p {
+        max-width: 100%;
+    }
+
+
+    .cta-section {
+        padding: 75px 20px;
+    }
+
+
+    .cta-section h2 {
+        font-size: 38px;
+
+        letter-spacing: -1.3px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+    .hero {
+        padding-top: 65px;
+    }
+
+
+    .hero-badge {
+        font-size: 9px;
+    }
+
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+
+    .hero-description {
+        font-size: 13px;
+    }
+
+
+    .section-heading h2 {
+        font-size: 30px;
+    }
+
+
+    .cta-section h2 {
+        font-size: 34px;
+    }
+
+}

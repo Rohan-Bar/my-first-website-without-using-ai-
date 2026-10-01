@@ -1,0 +1,738 @@
+/* =========================================================
+   CODESHIELD — VULNERABILITY GUIDE
+========================================================= */
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.vulnerability-page {
+    width: min(1200px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 80px 0 100px;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.vulnerability-hero {
+    max-width: 760px;
+    margin: 0 auto 55px;
+    text-align: center;
+}
+
+.vulnerability-hero .section-label {
+    display: inline-block;
+    margin-bottom: 18px;
+}
+
+.vulnerability-hero h1 {
+    margin: 0;
+    font-size: clamp(42px, 6vw, 68px);
+    line-height: 1.05;
+    letter-spacing: -2px;
+    font-weight: 800;
+}
+
+.vulnerability-hero h1 span {
+    color: #2563eb;
+}
+
+.vulnerability-hero p {
+    max-width: 650px;
+    margin: 22px auto 0;
+    font-size: 17px;
+    line-height: 1.7;
+    color: #6b7280;
+}
+
+
+/* =========================================================
+   SEARCH + FILTERS
+========================================================= */
+
+.vulnerability-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 35px;
+    padding: 18px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+}
+
+.search-box {
+    position: relative;
+    flex: 1;
+    max-width: 500px;
+}
+
+.search-box input {
+    width: 100%;
+    height: 48px;
+    padding: 0 18px 0 46px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+
+    outline: none;
+
+    font-family: inherit;
+    font-size: 14px;
+
+    background: #ffffff;
+    color: #111827;
+
+    transition: border-color 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.search-box input:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.10);
+}
+
+.search-icon {
+    position: absolute;
+    left: 17px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    font-size: 22px;
+    color: #6b7280;
+
+    pointer-events: none;
+}
+
+.severity-filters {
+    display: flex;
+    gap: 8px;
+}
+
+.filter-btn {
+    height: 40px;
+
+    padding: 0 17px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+
+    background: #ffffff;
+    color: #4b5563;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.filter-btn:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+}
+
+.filter-btn.active {
+    background: #111827;
+    border-color: #111827;
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   VULNERABILITY GRID
+========================================================= */
+
+.vulnerability-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+
+/* =========================================================
+   VULNERABILITY CARD
+========================================================= */
+
+.vulnerability-card {
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+
+    padding: 24px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.vulnerability-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #bfdbfe;
+
+    box-shadow:
+        0 12px 30px rgba(17, 24, 39, 0.08);
+}
+
+.vulnerability-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 18px;
+}
+
+.vulnerability-card h3 {
+    margin: 0;
+
+    font-size: 19px;
+    line-height: 1.3;
+
+    color: #111827;
+}
+
+.vulnerability-card p {
+    margin: 0;
+
+    color: #6b7280;
+
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+.vulnerability-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-top: 22px;
+
+    padding-top: 16px;
+
+    border-top: 1px solid #f0f0f0;
+}
+
+.owasp-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+}
+
+.view-details {
+    font-size: 12px;
+    font-weight: 700;
+    color: #2563eb;
+}
+
+
+/* =========================================================
+   SEVERITY
+========================================================= */
+
+.severity-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 5px 9px;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 0.5px;
+}
+
+.severity-high {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.severity-medium {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.severity-low {
+    background: #dcfce7;
+    color: #166534;
+}
+
+
+/* =========================================================
+   NO RESULTS
+========================================================= */
+
+.no-results {
+    text-align: center;
+
+    padding: 70px 20px;
+
+    border: 1px dashed #d1d5db;
+    border-radius: 14px;
+
+    background: #ffffff;
+}
+
+.no-results-icon {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 15px;
+
+    border-radius: 50%;
+
+    background: #f3f4f6;
+
+    color: #6b7280;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.no-results h3 {
+    margin: 0 0 8px;
+
+    color: #111827;
+}
+
+.no-results p {
+    margin: 0;
+
+    color: #6b7280;
+}
+
+
+/* =========================================================
+   DETAIL SECTION
+========================================================= */
+
+.vulnerability-detail {
+    position: relative;
+
+    margin-top: 55px;
+
+    padding: 42px;
+
+    background: #ffffff;
+
+    border: 1px solid #dbeafe;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 20px 50px rgba(17, 24, 39, 0.07);
+}
+
+.close-detail {
+    position: absolute;
+
+    top: 20px;
+    right: 20px;
+
+    width: 36px;
+    height: 36px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #6b7280;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.close-detail:hover {
+    background: #f3f4f6;
+    color: #111827;
+}
+
+
+/* =========================================================
+   DETAIL HEADER
+========================================================= */
+
+.detail-header {
+    margin-bottom: 38px;
+    padding-right: 45px;
+}
+
+.detail-severity {
+    display: inline-block;
+
+    padding: 6px 10px;
+
+    margin-bottom: 13px;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 0.6px;
+
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.detail-header h2 {
+    margin: 0 0 9px;
+
+    font-size: 34px;
+    line-height: 1.2;
+
+    color: #111827;
+}
+
+.detail-owasp {
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #6b7280;
+}
+
+
+/* =========================================================
+   DETAIL BLOCK
+========================================================= */
+
+.detail-block {
+    margin-bottom: 38px;
+}
+
+.detail-block h3 {
+    margin: 0 0 13px;
+
+    font-size: 18px;
+
+    color: #111827;
+}
+
+.detail-block p {
+    margin: 0;
+
+    max-width: 900px;
+
+    font-size: 15px;
+    line-height: 1.75;
+
+    color: #4b5563;
+}
+
+
+/* =========================================================
+   CODE COMPARISON
+========================================================= */
+
+.guide-code-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+.guide-code-card {
+    overflow: hidden;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    background: #111827;
+}
+
+.guide-code-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 16px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    background: #f9fafb;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.vulnerable-code-header {
+    color: #b91c1c;
+}
+
+.secure-code-header {
+    color: #166534;
+}
+
+.code-status {
+    font-size: 14px;
+}
+
+.guide-code-card pre {
+    margin: 0;
+
+    padding: 20px;
+
+    min-height: 150px;
+
+    overflow-x: auto;
+
+    color: #e5e7eb;
+
+    font-family:
+        "Consolas",
+        "Monaco",
+        monospace;
+
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.guide-code-card code {
+    font-family: inherit;
+}
+
+
+/* =========================================================
+   DANGER BLOCK
+========================================================= */
+
+.danger-block {
+    padding: 20px 22px;
+
+    background: #fff7ed;
+
+    border-left: 4px solid #f97316;
+
+    border-radius: 8px;
+}
+
+
+/* =========================================================
+   PREVENTION LIST
+========================================================= */
+
+#preventionList {
+    margin: 0;
+    padding-left: 20px;
+
+    color: #4b5563;
+
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+#preventionList li {
+    margin-bottom: 7px;
+}
+
+
+/* =========================================================
+   GUIDE CTA
+========================================================= */
+
+.guide-cta {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 25px;
+
+    padding: 25px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+}
+
+.guide-cta h3 {
+    margin: 0 0 6px;
+
+    font-size: 18px;
+
+    color: #111827;
+}
+
+.guide-cta p {
+    margin: 0;
+
+    font-size: 13px;
+
+    color: #6b7280;
+}
+
+
+/* =========================================================
+   BOTTOM CTA
+========================================================= */
+
+.vulnerability-bottom-cta {
+    margin-top: 100px;
+
+    padding: 70px 30px;
+
+    text-align: center;
+
+    background: #eef4ff;
+
+    border: 1px solid #dbeafe;
+
+    border-radius: 18px;
+}
+
+.vulnerability-bottom-cta .section-label {
+    display: inline-block;
+
+    margin-bottom: 15px;
+}
+
+.vulnerability-bottom-cta h2 {
+    max-width: 700px;
+
+    margin: 0 auto;
+
+    font-size: clamp(30px, 5vw, 48px);
+
+    line-height: 1.15;
+
+    letter-spacing: -1px;
+
+    color: #111827;
+}
+
+.vulnerability-bottom-cta h2 span {
+    color: #2563eb;
+}
+
+.vulnerability-bottom-cta p {
+    max-width: 600px;
+
+    margin: 18px auto 25px;
+
+    color: #6b7280;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .vulnerability-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-box {
+        max-width: none;
+    }
+
+    .severity-filters {
+        overflow-x: auto;
+    }
+
+    .filter-btn {
+        flex-shrink: 0;
+    }
+
+    .vulnerability-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .guide-code-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .guide-cta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .vulnerability-page {
+        width: min(100% - 24px, 1200px);
+        padding-top: 55px;
+    }
+
+    .vulnerability-hero {
+        margin-bottom: 40px;
+    }
+
+    .vulnerability-hero h1 {
+        letter-spacing: -1px;
+    }
+
+    .vulnerability-hero p {
+        font-size: 15px;
+    }
+
+    .vulnerability-controls {
+        padding: 12px;
+    }
+
+    .vulnerability-card {
+        padding: 20px;
+    }
+
+    .vulnerability-detail {
+        padding: 25px 20px;
+    }
+
+    .detail-header h2 {
+        font-size: 27px;
+    }
+
+    .vulnerability-bottom-cta {
+        margin-top: 70px;
+        padding: 50px 20px;
+    }
+
+}

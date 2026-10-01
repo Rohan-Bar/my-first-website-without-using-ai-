@@ -1,0 +1,716 @@
+/* 
+   GLOBAL RESET
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        sans-serif;
+
+    background: #f7f7f5;
+    color: #111827;
+
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+
+/* 
+   CONTAINERS
+*/
+
+.nav-container,
+.section-container,
+.footer-container,
+.footer-bottom,
+.hero-container,
+.cta-container {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+}
+
+
+/* 
+   NAVBAR
+*/
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    height: 70px;
+    padding: 0 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #f7f7f5;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+/* =========================================================
+   LEFT SIDE
+========================================================= */
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    font-size: 21px;
+    font-weight: 700;
+
+    color: #111827;
+
+    text-decoration: none;
+}
+
+.logo-icon {
+    color: #1e3a5f;
+    font-weight: 800;
+}
+
+.logo-text {
+    color: #111827;
+}
+
+
+/* =========================================================
+   HAMBURGER
+========================================================= */
+
+.hamburger {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 5px;
+
+    border: 1px solid transparent;
+    background: transparent;
+
+    cursor: pointer;
+    padding: 0;
+
+    border-radius: 6px;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.hamburger:hover {
+    background: #ecece9;
+    border-color: #deded9;
+}
+
+.hamburger span {
+    width: 21px;
+    height: 2px;
+
+    background: #111827;
+
+    border-radius: 2px;
+
+    transition: 0.3s ease;
+}
+
+
+/* =========================================================
+   HAMBURGER ANIMATION
+========================================================= */
+
+.hamburger.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+
+/* =========================================================
+   OLD NAVIGATION
+   Hidden because navbar now contains only:
+   Hamburger + Logo + Right-side actions
+========================================================= */
+
+.nav-links {
+    display: none;
+}
+
+
+/* =========================================================
+   NAVBAR RIGHT SIDE
+========================================================= */
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+
+/* =========================================================
+   GITHUB IMPORT
+========================================================= */
+
+.github-import {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    padding: 9px 13px;
+
+    color: #374151;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    border: 1px solid #d9d9d4;
+    background: #ffffff;
+
+    border-radius: 25px;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.github-import:hover {
+    background: #1e3a5f;
+    border-color: #bfc0bb;
+    color: #f4f6fb;
+}
+
+.github-icon {
+    font-size: 16px;
+    font-weight: 700;
+   
+}
+
+
+/* =========================================================
+   NAV BUTTON
+========================================================= */
+
+.nav-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 17px;
+
+    background: #1e3a5f;
+    color: #ffffff;
+
+    border: 1px solid #1e3a5f;
+    border-radius: 25px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.nav-button:hover {
+    background: #162d49;
+    border-color: #162d49;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   LEFT SIDE MOBILE MENU
+========================================================= */
+
+.mobile-menu {
+    position: fixed;
+
+    top: 70px;
+    left: 0;
+
+    width: 280px;
+    height: calc(100vh - 70px);
+
+    padding: 25px 22px;
+
+    background: #ffffff;
+
+    border-right: 1px solid #e5e7eb;
+
+    z-index: 999;
+
+    display: flex;
+    flex-direction: column;
+
+    transform: translateX(-100%);
+
+    transition: transform 0.3s ease;
+
+    box-shadow: 8px 0 25px rgba(17, 24, 39, 0.08);
+}
+
+
+/* OPEN STATE */
+
+.mobile-menu.open {
+    transform: translateX(0);
+}
+
+
+/* MENU LINKS */
+
+.mobile-menu a {
+    display: block;
+
+    padding: 15px 4px;
+
+    color: #374151;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    border-bottom: 1px solid #ecece9;
+
+    transition:
+        color 0.2s ease,
+        padding-left 0.2s ease;
+}
+
+
+.mobile-menu a:hover {
+    color: #1e3a5f;
+
+    padding-left: 8px;
+}
+
+
+.mobile-menu a:last-child {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.primary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 13px 21px;
+
+    background: #1e3a5f;
+    color: #ffffff;
+
+    border: 1px solid #1e3a5f;
+    border-radius: 7px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.primary-button:hover {
+    background: #162d49;
+
+    transform: translateY(-2px);
+}
+
+.primary-button span {
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+========================================================= */
+
+.secondary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 20px;
+
+    border: 1px solid #d5d6d1;
+
+    background: #ffffff;
+    color: #374151;
+
+    border-radius: 7px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.secondary-button:hover {
+    border-color: #aeb0aa;
+    background: #f1f1ee;
+    color: #111827;
+}
+
+
+/* =========================================================
+   SECTION LABEL
+========================================================= */
+
+.section-label {
+    display: inline-block;
+
+    color: #1e3a5f;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 1.5px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+    background: #111827;
+
+    color: #ffffff;
+
+    margin-top: 0;
+}
+
+
+/* =========================================================
+   FOOTER CONTAINER
+========================================================= */
+
+.footer-container {
+    padding-top: 55px;
+    padding-bottom: 45px;
+
+    display: flex;
+    justify-content: space-between;
+
+    gap: 60px;
+}
+
+
+/* =========================================================
+   FOOTER BRAND
+========================================================= */
+
+.footer-brand {
+    max-width: 350px;
+}
+
+.footer-brand .logo-text {
+    color: #ffffff;
+}
+
+.footer-brand .logo-icon {
+    color: #9fb4ca;
+    background: transparent;
+}
+
+.footer-brand p {
+    margin-top: 15px;
+
+    color: #9ca3af;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   FOOTER LINKS
+========================================================= */
+
+.footer-links {
+    display: flex;
+    gap: 80px;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+.footer-column h4 {
+    margin-bottom: 8px;
+
+    font-size: 13px;
+    color: #ffffff;
+}
+
+.footer-column a {
+    color: #9ca3af;
+
+    font-size: 12px;
+
+    transition: color 0.2s ease;
+}
+
+.footer-column a:hover {
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   FOOTER BOTTOM
+========================================================= */
+
+.footer-bottom {
+    padding: 18px 0;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.09);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.footer-bottom p {
+    color: #6b7280;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   SECURITY COLORS
+   Use these for analyzer/results page
+========================================================= */
+
+.security-high {
+    color: #b91c1c;
+    background: #fef2f2;
+}
+
+.security-medium {
+    color: #b45309;
+    background: #fffbeb;
+}
+
+.security-low {
+    color: #475569;
+    background: #f1f5f9;
+}
+
+.security-safe {
+    color: #15803d;
+    background: #f0fdf4;
+}
+
+
+/* =========================================================
+   RESPONSIVE NAVBAR
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .navbar {
+        padding: 0 22px;
+    }
+
+    /*
+       Middle navigation is already removed.
+       Only hamburger + logo remain on the left.
+    */
+
+    .navbar-left {
+        gap: 12px;
+    }
+
+    .navbar-right {
+        gap: 8px;
+    }
+
+    .footer-container {
+        flex-direction: column;
+    }
+
+    .footer-links {
+        gap: 55px;
+    }
+}
+
+
+/* =========================================================
+   TABLET / MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .nav-container,
+    .section-container,
+    .footer-container,
+    .footer-bottom,
+    .hero-container,
+    .cta-container {
+        width: min(100% - 28px, 1180px);
+    }
+
+
+    .navbar {
+        height: 64px;
+        padding: 0 14px;
+    }
+
+
+    .navbar-left {
+        gap: 9px;
+    }
+
+
+    .logo {
+        font-size: 19px;
+    }
+
+
+    .hamburger {
+        width: 38px;
+        height: 38px;
+    }
+
+
+    .navbar-right {
+        gap: 6px;
+    }
+
+
+    /*
+       GitHub Import becomes icon-only
+       on very small screens.
+    */
+
+    .github-import {
+        padding: 8px 9px;
+
+        font-size: 0;
+    }
+
+    .github-icon {
+        font-size: 16px;
+    }
+
+
+    .nav-button {
+        padding: 9px 12px;
+
+        font-size: 12px;
+    }
+
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 420px) {
+
+    .navbar {
+        padding: 0 10px;
+    }
+
+    .logo {
+        font-size: 18px;
+    }
+
+    .nav-button {
+        padding: 8px 10px;
+
+        font-size: 11px;
+    }
+
+    .github-import {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .mobile-menu {
+        top: 64px;
+        height: calc(100vh - 64px);
+        width: 270px;
+    }
+
+}

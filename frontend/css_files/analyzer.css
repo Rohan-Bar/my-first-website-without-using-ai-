@@ -1,0 +1,1678 @@
+/* =========================================================
+   CODESHIELD ANALYZER
+   Analyzer-specific styles
+========================================================= */
+
+
+/* =========================================================
+   WORKSPACE
+========================================================= */
+
+.workspace {
+    width: min(1400px, calc(100% - 40px));
+    margin: 0 auto;
+
+    padding: 35px 0 80px;
+}
+
+
+/* =========================================================
+   TOP ANALYZER WORKSPACE
+   Editor + AI Chat
+========================================================= */
+
+.analyzer-workspace {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.65fr)
+        minmax(340px, 0.85fr);
+
+    gap: 20px;
+
+    align-items: stretch;
+}
+
+
+/* =========================================================
+   GENERAL PANEL
+========================================================= */
+
+.panel {
+    background: #ffffff;
+
+    border: 1px solid #dedfd9;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   EDITOR PANEL
+========================================================= */
+
+.editor-panel {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    min-height: 650px;
+}
+
+
+/* =========================================================
+   PANEL HEADER
+========================================================= */
+
+.panel-header {
+    min-height: 58px;
+
+    padding: 0 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+/* =========================================================
+   PANEL TITLE
+========================================================= */
+
+.panel-title {
+    color: #111827;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   PANEL TITLE GROUP
+========================================================= */
+
+.panel-title-group {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+/* =========================================================
+   EDITOR STATUS
+========================================================= */
+
+.editor-status {
+    padding: 4px 8px;
+
+    background: #f1f5f9;
+
+    color: #64748b;
+
+    border-radius: 4px;
+
+    font-size: 10px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   LANGUAGE SELECT
+========================================================= */
+
+.panel-header select {
+    min-width: 125px;
+
+    padding: 7px 10px;
+
+    background: #ffffff;
+
+    border: 1px solid #d9dcd8;
+
+    border-radius: 5px;
+
+    color: #374151;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+
+.panel-header select:focus {
+    border-color: #1e3a5f;
+}
+
+
+/* =========================================================
+   GITHUB IMPORT PANEL
+========================================================= */
+
+.github-import-panel {
+    padding: 12px 15px;
+
+    background: #fafaf8;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+
+/* =========================================================
+   GITHUB INPUT
+========================================================= */
+
+.github-input-wrapper {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.github-input-wrapper input {
+    flex: 1;
+
+    min-width: 0;
+
+    height: 38px;
+
+    padding: 0 12px;
+
+    background: #ffffff;
+
+    border: 1px solid #d9dcd8;
+
+    border-radius: 5px;
+
+    color: #111827;
+
+    font-size: 12px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.github-input-wrapper input::placeholder {
+    color: #9ca3af;
+}
+
+
+.github-input-wrapper input:focus {
+    border-color: #1e3a5f;
+
+    box-shadow:
+        0 0 0 2px rgba(30, 58, 95, 0.08);
+}
+
+
+/* =========================================================
+   MONACO EDITOR CONTAINER
+========================================================= */
+
+.monaco-editor-container {
+    position: relative;
+
+    flex: 1;
+
+    min-height: 480px;
+
+    background: #ffffff;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   FALLBACK TEXTAREA
+========================================================= */
+
+#codeInput {
+    width: 100%;
+    height: 380px;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    resize: none;
+    padding: 20px;
+    font-family: Consolas, monospace;
+    font-size: 15px;
+    line-height: 1.6;
+    background: #ffffff;
+    color: #111827;
+}
+
+
+/* =========================================================
+   PANEL FOOTER
+========================================================= */
+
+.panel-footer {
+    min-height: 65px;
+
+    padding: 12px 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 9px;
+
+    background: #ffffff;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+
+/* =========================================================
+   CHAT PANEL
+========================================================= */
+
+.chat-panel {
+    min-width: 0;
+
+    min-height: 650px;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   CHAT HEADER
+========================================================= */
+
+.chat-head {
+    justify-content: flex-start;
+}
+
+
+/* =========================================================
+   CHAT TITLE
+========================================================= */
+
+.chat-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+}
+
+
+.chat-title strong {
+    display: block;
+
+    color: #111827;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+.chat-title small {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    margin-top: 2px;
+
+    color: #737983;
+
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   BOT AVATAR
+========================================================= */
+
+.bot-avatar {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #eef2f5;
+
+    border: 1px solid #dce1e5;
+
+    border-radius: 6px;
+
+    color: #1e3a5f;
+
+    font-family:
+        "Cascadia Code",
+        "Fira Code",
+        Consolas,
+        monospace;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   ONLINE DOT
+========================================================= */
+
+.online-dot {
+    width: 6px;
+    height: 6px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+
+    background: #15803d;
+}
+
+
+/* =========================================================
+   AI ISSUE
+========================================================= */
+
+.ai-issue {
+    margin: 15px;
+
+    padding: 14px;
+
+    background: #fafaf8;
+
+    border: 1px solid #dedfd9;
+
+    border-radius: 6px;
+}
+
+
+.ai-issue-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 8px;
+}
+
+
+.ai-issue-header > span:first-child {
+    color: #737983;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.8px;
+}
+
+
+/* =========================================================
+   AI ISSUE SEVERITY
+========================================================= */
+
+#aiIssueSeverity {
+    padding: 4px 7px;
+
+    border-radius: 4px;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+}
+
+
+.ai-issue h3 {
+    color: #111827;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   CHAT MESSAGES
+========================================================= */
+
+.chat-messages {
+    flex: 1;
+
+    min-height: 0;
+
+    padding: 10px 15px 20px;
+
+    overflow-y: auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+/* =========================================================
+   AI WELCOME
+========================================================= */
+
+.ai-welcome {
+    margin: auto;
+
+    max-width: 270px;
+
+    padding: 25px 10px;
+
+    text-align: center;
+}
+
+
+.welcome-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 15px;
+
+    background: #eef2f5;
+
+    border: 1px solid #dce1e5;
+
+    border-radius: 6px;
+
+    color: #1e3a5f;
+
+    font-family:
+        "Cascadia Code",
+        "Fira Code",
+        Consolas,
+        monospace;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.ai-welcome h3 {
+    margin-bottom: 7px;
+
+    color: #1f2937;
+
+    font-size: 14px;
+}
+
+
+.ai-welcome p {
+    color: #737983;
+
+    font-size: 11px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   CHAT MESSAGE
+========================================================= */
+
+.chat-message {
+    max-width: 90%;
+
+    padding: 11px 13px;
+
+    border-radius: 6px;
+
+    font-size: 12px;
+
+    line-height: 1.65;
+}
+
+
+.chat-message.ai {
+    align-self: flex-start;
+
+    background: #f1f5f9;
+
+    border: 1px solid #e2e8f0;
+
+    color: #374151;
+}
+
+
+.chat-message.user {
+    align-self: flex-end;
+
+    background: #1e3a5f;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   CHAT FORM
+========================================================= */
+
+.chat-form {
+    padding: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    background: #ffffff;
+
+    border-top: 1px solid #e5e7eb;
+}
+
+
+.chat-form input {
+    flex: 1;
+
+    min-width: 0;
+
+    height: 40px;
+
+    padding: 0 12px;
+
+    background: #fafaf8;
+
+    border: 1px solid #d9dcd8;
+
+    border-radius: 5px;
+
+    color: #111827;
+
+    font-size: 11px;
+
+    outline: none;
+}
+
+
+.chat-form input:focus {
+    background: #ffffff;
+
+    border-color: #1e3a5f;
+
+    box-shadow:
+        0 0 0 2px rgba(30, 58, 95, 0.08);
+}
+
+
+/* =========================================================
+   SEND BUTTON
+========================================================= */
+
+.send-btn {
+    height: 40px;
+
+    padding: 0 14px;
+
+    background: #1e3a5f;
+
+    border: 1px solid #1e3a5f;
+
+    border-radius: 5px;
+
+    color: #ffffff;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.send-btn:hover {
+    background: #162d49;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   ANALYSIS SECTION
+========================================================= */
+
+.analysis-section {
+    margin-top: 75px;
+}
+
+
+/* =========================================================
+   ANALYZER SECTION HEADING
+========================================================= */
+
+.analyzer-heading {
+    margin-bottom: 30px;
+}
+
+
+.analyzer-heading h2 {
+    font-size: clamp(28px, 4vw, 42px);
+}
+
+
+/* =========================================================
+   ISSUES PANEL
+========================================================= */
+
+.issues-panel {
+    background: #ffffff;
+
+    border: 1px solid #dedfd9;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   ISSUES HEADER
+========================================================= */
+
+.issues-header {
+    min-height: 52px;
+
+    padding: 0 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    color: #111827;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.issue-count {
+    color: #737983;
+
+    font-size: 10px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   ISSUES CONTAINER
+========================================================= */
+
+.issues-container {
+    min-height: 150px;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   ISSUE ITEM
+========================================================= */
+
+.issue-item {
+    padding: 17px 18px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        auto
+        auto;
+
+    align-items: center;
+
+    gap: 20px;
+
+    border-bottom: 1px solid #ecece9;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease;
+}
+
+
+.issue-item:last-child {
+    border-bottom: none;
+}
+
+
+.issue-item:hover {
+    background: #fafaf8;
+}
+
+
+/* =========================================================
+   ISSUE INFORMATION
+========================================================= */
+
+.issue-main {
+    min-width: 0;
+}
+
+
+.issue-type {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 5px;
+
+    color: #1f2937;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+.issue-description {
+    color: #737983;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   ISSUE ICON
+========================================================= */
+
+.issue-icon {
+    width: 7px;
+    height: 7px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: #b91c1c;
+}
+
+
+/* =========================================================
+   ISSUE LINE
+========================================================= */
+
+.issue-line {
+    color: #64748b;
+
+    font-family:
+        "Cascadia Code",
+        "Fira Code",
+        Consolas,
+        monospace;
+
+    font-size: 10px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ISSUE SEVERITY
+========================================================= */
+
+.issue-severity {
+    min-width: 65px;
+
+    padding: 5px 8px;
+
+    text-align: center;
+
+    border-radius: 4px;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+}
+
+
+.issue-severity.high {
+    color: #b91c1c;
+
+    background: #fef2f2;
+}
+
+
+.issue-severity.medium {
+    color: #b45309;
+
+    background: #fffbeb;
+}
+
+
+.issue-severity.low {
+    color: #475569;
+
+    background: #f1f5f9;
+}
+
+
+.issue-severity.critical {
+    color: #991b1b;
+
+    background: #fee2e2;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-state {
+    min-height: 180px;
+
+    padding: 35px 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+}
+
+
+.empty-icon {
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 12px;
+
+    background: #f0fdf4;
+
+    border: 1px solid #dcfce7;
+
+    border-radius: 50%;
+
+    color: #15803d;
+
+    font-size: 16px;
+
+    font-weight: 800;
+}
+
+
+.empty-state h3 {
+    margin-bottom: 5px;
+
+    color: #1f2937;
+
+    font-size: 13px;
+}
+
+
+.empty-state p {
+    max-width: 350px;
+
+    color: #737983;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   COMPLEXITY GRID
+========================================================= */
+
+.complexity-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    border-top: 1px solid #dedfd9;
+
+    border-left: 1px solid #dedfd9;
+}
+
+
+/* =========================================================
+   COMPLEXITY CARD
+========================================================= */
+
+.complexity-card {
+    min-height: 190px;
+
+    padding: 28px;
+
+    background: #ffffff;
+
+    border-right: 1px solid #dedfd9;
+
+    border-bottom: 1px solid #dedfd9;
+}
+
+
+.complexity-label {
+    display: block;
+
+    margin-bottom: 28px;
+
+    color: #737983;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+
+.complexity-card strong {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #1e3a5f;
+
+    font-family:
+        "Cascadia Code",
+        "Fira Code",
+        Consolas,
+        monospace;
+
+    font-size: 28px;
+
+    font-weight: 700;
+}
+
+
+.complexity-card p {
+    max-width: 230px;
+
+    color: #737983;
+
+    font-size: 11px;
+
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   BOTTLENECK
+========================================================= */
+
+.bottleneck-card strong {
+    color: #b45309;
+
+    font-size: 20px;
+}
+
+
+/* =========================================================
+   SECURE CODE COMPARISON
+========================================================= */
+
+.code-comparison {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    border: 1px solid #dedfd9;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+}
+
+
+.code-comparison-panel {
+    min-width: 0;
+
+    background: #111827;
+}
+
+
+.code-comparison-panel + .code-comparison-panel {
+    border-left: 1px solid #374151;
+}
+
+
+/* =========================================================
+   COMPARISON HEADER
+========================================================= */
+
+.comparison-header {
+    min-height: 48px;
+
+    padding: 0 16px;
+
+    display: flex;
+
+    align-items: center;
+
+    border-bottom: 1px solid #374151;
+
+    font-size: 11px;
+
+    font-weight: 700;
+}
+
+
+.vulnerable-header {
+    color: #fca5a5;
+
+    background: #1f1515;
+}
+
+
+.secure-header {
+    color: #86efac;
+
+    background: #101d16;
+}
+
+
+/* =========================================================
+   CODE BLOCK
+========================================================= */
+
+.code-comparison pre {
+    margin: 0;
+
+    min-height: 260px;
+
+    padding: 22px;
+
+    overflow-x: auto;
+
+    color: #d1d5db;
+
+    font-family:
+        "Cascadia Code",
+        "Fira Code",
+        Consolas,
+        monospace;
+
+    font-size: 12px;
+
+    line-height: 1.75;
+
+    white-space: pre-wrap;
+
+    word-break: break-word;
+}
+
+
+.code-comparison code {
+    font-family: inherit;
+}
+
+
+/* =========================================================
+   LOADING OVERLAY
+========================================================= */
+
+.loading-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 2000;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: rgba(17, 24, 39, 0.45);
+}
+
+
+.loading-box {
+    width: min(360px, calc(100% - 40px));
+
+    padding: 35px;
+
+    background: #ffffff;
+
+    border: 1px solid #dedfd9;
+
+    border-radius: 8px;
+
+    text-align: center;
+
+    box-shadow:
+        0 20px 50px rgba(17, 24, 39, 0.15);
+}
+
+
+.loading-spinner {
+    width: 34px;
+    height: 34px;
+
+    margin: 0 auto 18px;
+
+    border: 3px solid #e5e7eb;
+
+    border-top-color: #1e3a5f;
+
+    border-radius: 50%;
+
+    animation: analyzerSpin 0.8s linear infinite;
+}
+
+
+.loading-box h3 {
+    margin-bottom: 6px;
+
+    color: #111827;
+
+    font-size: 14px;
+}
+
+
+.loading-box p {
+    color: #737983;
+
+    font-size: 11px;
+}
+
+
+@keyframes analyzerSpin {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* =========================================================
+   ERROR OVERLAY
+========================================================= */
+
+.analyzer-error {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 2100;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(17, 24, 39, 0.4);
+}
+
+
+.error-box {
+    position: relative;
+
+    width: min(420px, 100%);
+
+    padding: 25px;
+
+    background: #ffffff;
+
+    border: 1px solid #fecaca;
+
+    border-radius: 8px;
+
+    box-shadow:
+        0 20px 50px rgba(17, 24, 39, 0.15);
+}
+
+
+.error-box strong {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #b91c1c;
+
+    font-size: 14px;
+}
+
+
+.error-box p {
+    color: #4b5563;
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+.error-close {
+    position: absolute;
+
+    top: 10px;
+    right: 12px;
+
+    width: 28px;
+    height: 28px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #6b7280;
+
+    font-size: 22px;
+
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+
+.error-close:hover {
+    color: #111827;
+}
+
+
+/* =========================================================
+   MONACO CUSTOMIZATION
+========================================================= */
+
+.monaco-editor-container .monaco-editor {
+    padding-top: 5px;
+}
+
+
+/* =========================================================
+   RESPONSIVE — LARGE TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+
+    .analyzer-workspace {
+        grid-template-columns:
+            minmax(0, 1.35fr)
+            minmax(300px, 0.85fr);
+    }
+
+
+    .workspace {
+        width: min(100% - 30px, 1400px);
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 850px) {
+
+    .analyzer-workspace {
+        grid-template-columns: 1fr;
+    }
+
+
+    .editor-panel,
+    .chat-panel {
+        min-height: 600px;
+    }
+
+
+    .monaco-editor-container {
+        min-height: 430px;
+    }
+
+
+    .complexity-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .complexity-card {
+        min-height: 160px;
+    }
+
+
+    .code-comparison {
+        grid-template-columns: 1fr;
+    }
+
+
+    .code-comparison-panel + .code-comparison-panel {
+        border-left: none;
+
+        border-top: 1px solid #374151;
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .workspace {
+        width: calc(100% - 24px);
+
+        padding-top: 22px;
+
+        padding-bottom: 55px;
+    }
+
+
+    .panel {
+        border-radius: 6px;
+    }
+
+
+    .panel-header {
+        min-height: 54px;
+
+        padding: 0 13px;
+    }
+
+
+    .panel-title {
+        font-size: 12px;
+    }
+
+
+    .panel-header select {
+        min-width: 105px;
+
+        font-size: 11px;
+    }
+
+
+    .github-import-panel {
+        padding: 10px;
+    }
+
+
+    .github-input-wrapper {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .github-input-wrapper input {
+        width: 100%;
+    }
+
+
+    .github-input-wrapper .secondary-button {
+        width: 100%;
+    }
+
+
+    .monaco-editor-container {
+        min-height: 400px;
+    }
+
+
+    .editor-panel,
+    .chat-panel {
+        min-height: 550px;
+    }
+
+
+    .panel-footer {
+        min-height: 60px;
+
+        padding: 10px;
+    }
+
+
+    .panel-footer .primary-button,
+    .panel-footer .secondary-button {
+        padding: 10px 13px;
+
+        font-size: 11px;
+    }
+
+
+    .analysis-section {
+        margin-top: 55px;
+    }
+
+
+    .analyzer-heading {
+        margin-bottom: 22px;
+    }
+
+
+    .analyzer-heading h2 {
+        font-size: 30px;
+    }
+
+
+    .issues-header {
+        padding: 0 13px;
+    }
+
+
+    .issue-item {
+        grid-template-columns: 1fr auto;
+
+        gap: 10px;
+
+        padding: 15px 13px;
+    }
+
+
+    .issue-main {
+        grid-column: 1 / -1;
+    }
+
+
+    .issue-line {
+        grid-column: 1;
+    }
+
+
+    .issue-severity {
+        grid-column: 2;
+
+        grid-row: 2;
+    }
+
+
+    .complexity-card {
+        padding: 23px;
+    }
+
+
+    .complexity-label {
+        margin-bottom: 20px;
+    }
+
+
+    .complexity-card strong {
+        font-size: 25px;
+    }
+
+
+    .code-comparison pre {
+        min-height: 220px;
+
+        padding: 17px;
+
+        font-size: 11px;
+    }
+
+
+    .chat-form {
+        padding: 10px;
+    }
+
+
+    .chat-form input {
+        font-size: 11px;
+    }
+
+
+    .send-btn {
+        padding: 0 12px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+    .workspace {
+        width: calc(100% - 18px);
+    }
+
+
+    .panel-header {
+        flex-wrap: wrap;
+
+        padding-top: 8px;
+
+        padding-bottom: 8px;
+    }
+
+
+    .panel-title-group {
+        width: 100%;
+
+        justify-content: space-between;
+    }
+
+
+    .panel-header select {
+        width: 100%;
+    }
+
+
+    .editor-panel,
+    .chat-panel {
+        min-height: 520px;
+    }
+
+
+    .monaco-editor-container {
+        min-height: 350px;
+    }
+
+
+    .ai-issue {
+        margin: 10px;
+    }
+
+
+    .chat-messages {
+        padding-left: 10px;
+
+        padding-right: 10px;
+    }
+
+
+    .analyzer-heading h2 {
+        font-size: 27px;
+    }
+
+
+    .empty-state {
+        padding-left: 15px;
+
+        padding-right: 15px;
+    }
+
+
+    .complexity-card strong {
+        font-size: 23px;
+    }
+
+}
+
+
+/* =========================================================
+   HIDDEN ELEMENTS
+========================================================= */
+
+[hidden] {
+    display: none !important;
+}
